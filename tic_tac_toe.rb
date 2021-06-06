@@ -19,10 +19,25 @@ class TicTacToe
     check_winner
   end
 
-  def check_board
-    # print the current stawte
-    puts "#{tic_tac_toe_state[0]}, #{tic_tac_toe_state[1]}, #{tic_tac_toe_state[2]}"
+  def display_board
+    # print the current state
+    puts <<-HEREDOC
+      #{display_position(0,0)} | #{display_position(0,1)} | #{display_position(0,2)}
+      ---+---+---
+      #{display_position(1,0)} | #{display_position(1,1)} | #{display_position(1,2)}
+      ---+---+---
+      #{display_position(2,0)} | #{display_position(2,1)} | #{display_position(2,2)}
+    HEREDOC
   end
+
+  def display_position(row,col)
+    if row && col && !tic_tac_toe_state[row][col].nil?
+      tic_tac_toe_state[row][col]
+    else
+      "-"
+    end
+  end
+
 
   def reset_board
     # reset state
