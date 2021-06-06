@@ -1,0 +1,71 @@
+# Rules:
+# Load the file: irb -r ./tic_tac_toe.rb
+# Start the game: game1 = TicTacToe.new
+# Make the first move: game1.play(1,1,x)
+# Check the board: game1.chec_board
+# Keep making moves until you win
+
+class TicTacToe
+  attr_reader :player, :tic_tac_toe_state
+  def initialize
+    @row = 0
+    @col = 0
+    @player = ''
+    @tic_tac_toe_state = [[nil,nil,nil],[nil,nil,nil],[nil,nil,nil]]
+  end
+
+  def play(row, col, player)
+    @row = row
+    @col = col
+    @player = player
+
+    return 'Off the board' if @row > 3 || @col > 3
+    return 'That position is already taken' if !tic_tac_toe_state[@row - 1][@col - 1].nil?
+    check_winner
+  end
+
+  def check_board
+    puts "#{tic_tac_toe_state[0]}, #{tic_tac_toe_state[1]}, #{tic_tac_toe_state[2]}"
+  end
+
+  def reset_board
+    @tic_tac_toe_state = [[nil,nil,nil],[nil,nil,nil],[nil,nil,nil]]
+  end
+
+  def check_winner
+    # save the move
+    tic_tac_toe_state[@row-1][@col-1] = player
+
+    # check each row if there's a win aka row win
+    tic_tac_toe_state.each do |pos|
+      if pos[0] == player && pos[1] == player && pos[2] == player
+        puts 'Row Winner' 
+        reset_board
+      end
+    end
+    
+    # check each column if there's a win aka column win
+    row = 0
+    col = 0
+    while col < 3
+      if tic_tac_toe_state[row][col] == player && 
+        tic_tac_toe_state[row + 1][col] == player &&
+        tic_tac_toe_state[row + 2][col] == player
+        puts 'Column Winner, resetting board'
+        reset_board
+      end
+      col += 1
+    end
+
+    # Check for a diagonal
+    row = 0
+    col = 0
+      if tic_tac_toe_state[row][col] == player &&
+        tic_tac_toe_state[row + 1][col + 1] == player &&
+        tic_tac_toe_state[row + 2][col + 2] == player
+          puts 'Diagonal Winner, resetting board' 
+          reset_board
+      end
+  end
+end
+
