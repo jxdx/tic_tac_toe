@@ -25,13 +25,14 @@ class TicTacToe
 
   def display_board
     # print the current state
-    puts <<-HEREDOC
-      #{display_position(0,0)} | #{display_position(0,1)} | #{display_position(0,2)}
-      ---+---+---
-      #{display_position(1,0)} | #{display_position(1,1)} | #{display_position(1,2)}
-      ---+---+---
-      #{display_position(2,0)} | #{display_position(2,1)} | #{display_position(2,2)}
-    HEREDOC
+    pos = 0
+    while pos < 3
+      puts <<-HEREDOC
+        #{display_position(pos,0)} | #{display_position(pos,1)} | #{display_position(pos,2)}
+        --+---+---
+      HEREDOC
+      pos += 1
+    end
   end
 
   def display_position(row,col)
