@@ -14,6 +14,7 @@ class TicTacToe
     @player = player
 
     # a few small validation checks
+    return 'Wrong player' unless ['x', 'o'].include?(player)
     return 'Off the board' if @row > 3 || @col > 3
     return 'That position is already taken' if !tic_tac_toe_state[@row-1][@col-1].nil?
     
