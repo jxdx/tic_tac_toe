@@ -16,7 +16,10 @@ class TicTacToe
     # a few small validation checks
     return 'Off the board' if @row > 3 || @col > 3
     return 'That position is already taken' if !tic_tac_toe_state[@row-1][@col-1].nil?
+    
     check_winner
+
+    display_board
   end
 
   def display_board
@@ -47,15 +50,26 @@ class TicTacToe
   def check_winner
     # save the move
     tic_tac_toe_state[@row-1][@col-1] = player
+    
+    # check for a winning play
+    row_winner?
 
+    col_winner?
+
+    diagonal_winner?
+  end
+
+  def row_winner?
     # check each row if there's a winner aka row win
     tic_tac_toe_state.each do |pos|
       if pos[0] == player && pos[1] == player && pos[2] == player
-        puts 'Row Winner, resetting the board' 
+        puts 'Row Winner, resetting the board'
         reset_board
       end
     end
-    
+  end
+
+  def col_winner?
     # check each column if there's a winner aka column win
     row = 0
     col = 0
@@ -68,16 +82,18 @@ class TicTacToe
       end
       col += 1
     end
+  end
 
-    # Check for a diagonal winner
-    row = 0
-    col = 0
-      if tic_tac_toe_state[row][col] == player &&
-        tic_tac_toe_state[row + 1][col + 1] == player &&
-        tic_tac_toe_state[row + 2][col + 2] == player
-          puts 'Diagonal Winner, resetting the board' 
-          reset_board
-      end
+  def diagonal_winner?
+     # Check for a diagonal winner
+     row = 0
+     col = 0
+       if tic_tac_toe_state[row][col] == player &&
+         tic_tac_toe_state[row + 1][col + 1] == player &&
+         tic_tac_toe_state[row + 2][col + 2] == player
+           puts 'Diagonal Winner, resetting the board'
+           reset_board
+       end
   end
 end
 
